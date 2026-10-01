@@ -6,13 +6,11 @@ ARCH=$(uname -m)
 
 echo "Installing package dependencies..."
 echo "---------------------------------------------------------------"
-pacman -S --needed --noconfirm git clang lld llvm freetype2 libx11 libxext libxfixes libgl libegl
+pacman -Syu --noconfirm git clang lld llvm freetype2 libx11 libxext libxfixes libgl libegl
 
 echo "Installing debloated packages..."
 echo "---------------------------------------------------------------"
-if [ -n "${CI:-}" ] || [ "${USE_DEBLOAT:-0}" = "1" ]; then
-	get-debloated-pkgs --add-common --prefer-nano
-fi
+get-debloated-pkgs --add-common --prefer-nano
 
 echo "Building RAD Debugger from upstream source..."
 echo "---------------------------------------------------------------"
