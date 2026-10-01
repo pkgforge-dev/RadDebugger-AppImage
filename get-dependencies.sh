@@ -4,6 +4,13 @@ set -eu
 
 ARCH=$(uname -m)
 
+# raddebugger only supports x64 hosts: build.sh passes -msse2/-mcx16 and assembles
+# x86-64 BLAKE3 sources, and the source itself rejects non-x64 builds.
+if [ "$ARCH" != "x86_64" ]; then
+	echo "ERROR: RAD Debugger does not support building on $ARCH hosts."
+	exit 1
+fi
+
 echo "Installing package dependencies..."
 echo "---------------------------------------------------------------"
 pacman -Syu --noconfirm git clang lld llvm freetype2 libx11 libxext libxfixes libgl libegl
